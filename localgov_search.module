@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\search_api\Entity\Index;
+use Drupal\views\Entity\View;
 
 /**
  * Implements hook_help().
@@ -24,12 +26,34 @@ function localgov_search_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_theme().
+ * Implements hook_entity_bundle_create().
  */
-function localgov_search_theme() {
-  return [
-    'localgov_search' => [
-      'render element' => 'children',
-    ],
-  ];
+function localgov_search_entity_bundle_create($entity_type_id, $bundle) {
+  if ($entity_type_id == 'node') {
+
+    // Add bundle's search result view mode to sitewide_search view.
+    if (
+      ($view = View::load('localgov_sitewide_search')) &&
+      $display = $view->get('display')
+    ) {
+      if (isset($display['default']['display_options']['row'])) {
+        $display['default']['display_options']['row']['options']['view_modes']['entity:node'][$bundle] = 'search_result';
+        $view->set('display', $display);
+        $view->save();
+      }
+    }
+
+    // Add bundle's search index view mode to sitewide search index.
+    if (
+      ($index = Index::load('localgov_sitewide_search')) &&
+      $index_field = $index->getField('rendered_item')
+    ) {
+      $field_config = $index_field->getConfiguration();
+      if (!isset($field_config['view_mode']['entity:node'][$bundle])) {
+        $field_config['view_mode']['entity:node'][$bundle] = 'search_index';
+        $index_field->setConfiguration($field_config);
+        $index->save();
+      }
+    }
+  }
 }

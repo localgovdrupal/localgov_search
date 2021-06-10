@@ -6,3 +6,4 @@ package: LocalGov Drupal
 
 dependencies:
   - search_api:search_api
+  - search_api:search_api_db

@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains localgov_search.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function localgov_search_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the localgov_search module.
+    case 'help.page.localgov_search':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Sitewide search for LocalGov Drupal') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_search_theme() {
+  return [
+    'localgov_search' => [
+      'render element' => 'children',
+    ],
+  ];
+}

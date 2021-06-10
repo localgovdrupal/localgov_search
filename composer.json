@@ -1,0 +1,11 @@
+{
+    "name": "localgovdrupal/localgov_search",
+    "description": "Sitewide search for LocalGov Drupal.",
+    "type": "drupal-module",
+    "homepage": "https://github.com/localgovdrupal/localgov_search",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/search_api": "^1.19"
+    }
+}

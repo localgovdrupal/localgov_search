@@ -5,15 +5,18 @@
  * Contains localgov_search.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\search_api\Entity\Index;
 use Drupal\views\Entity\View;
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_help().
  */
 function localgov_search_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
+
     // Main module help for the localgov_search module.
     case 'help.page.localgov_search':
       $output = '';
@@ -55,5 +58,53 @@ function localgov_search_entity_bundle_create($entity_type_id, $bundle) {
         $index->save();
       }
     }
+  }
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function localgov_search_views_pre_render(ViewExecutable $view) {
+  if ($view->element['#name'] == 'localgov_sitewide_search' && $view->element['#display_id'] == 'sitewide_search_page') {
+
+    // Hide search results if no search has been made.
+    if (!isset($_GET['s'])) {
+      $view->header = [];
+      $view->empty = [];
+    }
+
+    // Add search term to page title.
+    // This currently only sets the title in the header, not the page title,
+    // see: https://github.com/localgovdrupal/localgov_core/issues/93
+    elseif (isset($view->exposed_data['s']) and (int) $view->total_rows > 0) {
+      $title = $view->exposed_data['s'] . ' - ' . $view->getTitle();
+      $view->setTitle($title );
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function localgov_search_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Make search term required for sitewide search block.
+  if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
+    $form['s']['#required'] = TRUE;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for form hook.
+ */
+function localgov_search_preprocess_form(&$variables) {
+
+  // Add aria role to sitewide search form.
+  if (
+    isset($variables['element']['#id']) &&
+    $variables['element']['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page'
+  ) {
+    $variables['attributes']['role'] = 'search';
+    $variables['attributes']['aria-label'] = 'Sitewide';
   }
 }

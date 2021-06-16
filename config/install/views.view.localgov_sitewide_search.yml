@@ -65,7 +65,14 @@ display:
             offset_label: Offset
           quantity: 9
       style:
-        type: default
+        type: html_list
+        options:
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+          type: ol
+          wrapper_class: ''
+          class: search-results
       row:
         type: search_api
         options:
@@ -185,7 +192,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          order: ASC
+          order: DESC
           exposed: false
           expose:
             label: ''
@@ -251,7 +258,7 @@ display:
     display_options:
       display_extenders: {  }
       path: search
-      exposed_block: true
+      exposed_block: false
     cache_metadata:
       max-age: -1
       contexts:

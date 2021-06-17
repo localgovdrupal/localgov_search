@@ -65,7 +65,12 @@ function localgov_search_entity_bundle_create($entity_type_id, $bundle) {
  * Implements hook_views_pre_render().
  */
 function localgov_search_views_pre_render(ViewExecutable $view) {
-  if ($view->element['#name'] == 'localgov_sitewide_search' && $view->element['#display_id'] == 'sitewide_search_page') {
+  if (
+    isset($view->element['#name']) &&
+    $view->element['#name'] == 'localgov_sitewide_search' &&
+    isset($view->element['#display_id']) &&
+    $view->element['#display_id'] == 'sitewide_search_page'
+  ) {
 
     // Hide search results if no search has been made.
     if (!isset($_GET['s'])) {

@@ -73,7 +73,7 @@ class SitewideSearchTest extends BrowserTestBase {
       ],
     ])->save();
 
-    // create search result display mode.
+    // Create search result display mode.
     EntityViewDisplay::create([
       'targetEntityType' => 'node',
       'bundle' => $bundle,
@@ -119,7 +119,7 @@ class SitewideSearchTest extends BrowserTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
-    // index content.
+    // Index content.
     $index = Index::load('localgov_sitewide_search');
     $index->indexItems();
 
@@ -131,11 +131,11 @@ class SitewideSearchTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains('No results');
 
     // Check searches.
-    $this->submitForm(['s' => $title1], t('Apply'));
+    $this->submitForm(['s' => $title1], 'Apply');
     $this->assertSession()->pageTextContains($title1);
     $this->assertSession()->pageTextContains($summary1);
     $this->assertSession()->pageTextNotContains($body1);
-    $this->submitForm(['s' => $body2], t('Apply'));
+    $this->submitForm(['s' => $body2], 'Apply');
     $this->assertSession()->pageTextContains($title2);
     $this->assertSession()->pageTextContains($summary2);
   }

@@ -73,7 +73,7 @@ function localgov_search_views_pre_render(ViewExecutable $view) {
   ) {
 
     // Hide search results if no search has been made.
-    if (!isset($_GET['s'])) {
+    if (\Drupal::request()->query->get('s') === NULL) {
       $view->header = [];
       $view->empty = [];
     }
@@ -83,7 +83,7 @@ function localgov_search_views_pre_render(ViewExecutable $view) {
     // see: https://github.com/localgovdrupal/localgov_core/issues/93
     elseif (isset($view->exposed_data['s']) and (int) $view->total_rows > 0) {
       $title = $view->exposed_data['s'] . ' - ' . $view->getTitle();
-      $view->setTitle($title );
+      $view->setTitle($title);
     }
   }
 }

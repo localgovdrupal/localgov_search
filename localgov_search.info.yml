@@ -5,7 +5,4 @@ type: module
 package: LocalGov Drupal
 
 dependencies:
-  - drupal:node
-  - drupal:views
   - search_api:search_api
-  - search_api:search_api_db

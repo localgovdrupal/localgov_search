@@ -5,7 +5,6 @@
  * Contains localgov_search.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\search_api\Entity\Index;
 use Drupal\views\Entity\View;

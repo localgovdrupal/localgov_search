@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\views\Form\ViewsExposedForm;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -79,9 +80,10 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
         ->setAlwaysProcess()
         ->disableRedirect();
       $form_state->set('rerender', NULL);
-      $form = $this->formBuilder->buildForm('\Drupal\views\Form\ViewsExposedForm', $form_state);
+      $form = $this->formBuilder->buildForm(ViewsExposedForm::class, $form_state);
       $form['#id'] .= '-block';
       $form['s']['#attributes']['placeholder'] = 'Search';
+      $form['s']['#required'] = TRUE;
     }
 
     return $form;

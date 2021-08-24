@@ -89,17 +89,6 @@ function localgov_search_views_pre_render(ViewExecutable $view) {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter().
- */
-function localgov_search_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-  // Make search term required for sitewide search block.
-  if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
-    $form['s']['#required'] = TRUE;
-  }
-}
-
-/**
  * Implements hook_preprocess_HOOK() for form hook.
  */
 function localgov_search_preprocess_form(&$variables) {

@@ -46,7 +46,7 @@ display:
       pager:
         type: full
         options:
-          items_per_page: 12
+          items_per_page: 10
           offset: 0
           id: 0
           total_pages: null
@@ -72,7 +72,7 @@ display:
           uses_fields: false
           type: ol
           wrapper_class: ''
-          class: search-results
+          class: 'search-results lgd-search-results-list'
       row:
         type: search_api
         options:

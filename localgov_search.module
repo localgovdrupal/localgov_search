@@ -5,7 +5,6 @@
  * Contains localgov_search.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\search_api\Entity\Index;
 use Drupal\views\Entity\View;
@@ -85,17 +84,6 @@ function localgov_search_views_pre_render(ViewExecutable $view) {
       $title = $view->exposed_data['s'] . ' - ' . $view->getTitle();
       $view->setTitle($title);
     }
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
-function localgov_search_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-  // Make search term required for sitewide search block.
-  if ($form['#id'] == 'views-exposed-form-localgov-sitewide-search-sitewide-search-page') {
-    $form['s']['#required'] = TRUE;
   }
 }
 

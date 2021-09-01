@@ -82,7 +82,7 @@ jobs:
           composer global config github-oauth.github.com ${{ github.token }}
 
       - name: Obtain the test target from the repo that triggered this workflow
-        run: composer --working-dir=./html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
+        run: composer --working-dir=./html require --with-all-dependencies ${GIT_REPO}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
 
   phpcs:
     name: Coding standards checks

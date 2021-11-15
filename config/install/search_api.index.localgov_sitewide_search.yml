@@ -114,7 +114,7 @@ processor_settings:
     all_fields: true
     fields:
       - rendered_item
-    ignored: ._-
+    ignored: ._
     spaces: ''
     overlap_cjk: 1
     minimum_word_size: '3'

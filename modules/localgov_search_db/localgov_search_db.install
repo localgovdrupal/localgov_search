@@ -11,14 +11,30 @@ use Drupal\search_api\Entity\Server;
 /**
  * Implements hook_install().
  */
-function localgov_search_db_install() {
+function localgov_search_db_install($is_syncing) {
   if (
+    !$is_syncing &&
     ($index = Index::load('localgov_sitewide_search')) &&
     ($index->getServerId() == '')
   ) {
     $server = Server::load('localgov_sitewide_search');
     $index->setServer($server);
     $index->setStatus(TRUE);
+    $index->save();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function localgov_search_db_uninstall($is_syncing) {
+  if (
+    !$is_syncing &&
+    ($index = Index::load('localgov_sitewide_search')) &&
+    ($index->getServerId() == 'localgov_sitewide_search')
+  ) {
+    $index->setServer(NULL);
+    $index->setStatus(FALSE);
     $index->save();
   }
 }

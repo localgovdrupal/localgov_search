@@ -11,11 +11,11 @@ use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Test sitewide search.
+ * Base test for server modules to check sitewide search integration.
  *
  * @group localgov_search
  */
-class SitewideSearchTest extends BrowserTestBase {
+class SitewideSearchBase extends BrowserTestBase {
 
   use ContentTypeCreationTrait;
   use NodeCreationTrait;

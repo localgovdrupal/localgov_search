@@ -9,7 +9,6 @@ use Drupal\search_api\Entity\Index;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\Core\Cache\Cache;
 
 /**
  * Base test for server modules to check sitewide search integration.

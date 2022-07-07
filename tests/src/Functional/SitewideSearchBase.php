@@ -9,6 +9,7 @@ use Drupal\search_api\Entity\Index;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\Core\Cache\Cache;
 
 /**
  * Base test for server modules to check sitewide search integration.
@@ -122,6 +123,10 @@ class SitewideSearchBase extends BrowserTestBase {
     // Index content.
     $index = Index::load('localgov_sitewide_search');
     $index->indexItems();
+
+    // Which cache is this that needs clearing. DB test doesn't need it, solr
+    // does.
+    drupal_flush_all_caches();
 
     // Check search form.
     $url = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page');

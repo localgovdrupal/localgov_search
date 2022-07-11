@@ -32,14 +32,14 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
    *
    * @var string
    */
-  protected $view_id = 'localgov_sitewide_search';
+  protected $viewId = 'localgov_sitewide_search';
 
   /**
    * ID of the display on the view to get the exposed form from.
    *
    * @var string
    */
-  protected $display_id = 'sitewide_search_page';
+  protected $displayId = 'sitewide_search_page';
 
   /**
    * {@inheritdoc}
@@ -78,10 +78,10 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
 
     // Add sitewide search view filters to block.
     // Adapted from: https://blog.werk21.de/en/2017/03/08/programmatically-render-exposed-filter-form
-    $view = Views::getView($this->view_id);
+    $view = Views::getView($this->viewId);
 
     if ($view) {
-      $view->setDisplay($this->display_id);
+      $view->setDisplay($this->displayId);
       $view->initHandlers();
       $form_state = (new FormState())->setStorage([
         'view' => $view,

@@ -37,10 +37,10 @@ backend_config:
   connector: standard
   connector_config:
     scheme: http
-    host: solr
+    host: solr-sitewide
     port: 8983
     path: /
-    core: lando
+    core: sitewide
     timeout: 5
     index_timeout: 5
     optimize_timeout: 10

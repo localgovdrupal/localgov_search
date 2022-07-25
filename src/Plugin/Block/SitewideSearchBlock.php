@@ -6,6 +6,8 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
+use Drupal\search_api\Entity\Index;
 use Drupal\views\Form\ViewsExposedForm;
 use Drupal\views\Views;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -26,6 +28,20 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
    * @var \Drupal\Core\Form\FormBuilderInterface
    */
   protected $formBuilder;
+
+  /**
+   * ID of the view to get the exposed form from.
+   *
+   * @var string
+   */
+  protected $viewId = 'localgov_sitewide_search';
+
+  /**
+   * ID of the display on the view to get the exposed form from.
+   *
+   * @var string
+   */
+  protected $displayId = 'sitewide_search_page';
 
   /**
    * {@inheritdoc}
@@ -62,28 +78,39 @@ class SitewideSearchBlock extends BlockBase implements ContainerFactoryPluginInt
   public function build() {
     $form = [];
 
-    // Add sitewide search view filters to block.
-    // Adapted from: https://blog.werk21.de/en/2017/03/08/programmatically-render-exposed-filter-form
-    $view_id = 'localgov_sitewide_search';
-    $display_id = 'sitewide_search_page';
-    $view = Views::getView($view_id);
+    $index = Index::load('localgov_sitewide_search');
+    if (!$index->status()) {
+      $form[] = [
+        '#markup' => $this->t(
+          'The sitewide search index requires a search backend. <a href=":modules_page">Enabling the Sitewide Search Database module</a> will provide one.',
+          [
+            ':modules_page' => Url::fromRoute('system.modules_list', [], ['fragment' => 'module-localgov-search-db'])->toString(),
+          ]
+        ),
+      ];
+    }
+    else {
+      // Add sitewide search view filters to block.
+      // Adapted from: https://blog.werk21.de/en/2017/03/08/programmatically-render-exposed-filter-form
+      $view = Views::getView($this->viewId);
 
-    if ($view) {
-      $view->setDisplay($display_id);
-      $view->initHandlers();
-      $form_state = (new FormState())->setStorage([
-        'view' => $view,
-        'display' => &$view->display_handler->display,
-        'rerender' => TRUE,
-      ])
-        ->setMethod('get')
-        ->setAlwaysProcess()
-        ->disableRedirect();
-      $form_state->set('rerender', NULL);
-      $form = $this->formBuilder->buildForm(ViewsExposedForm::class, $form_state);
-      $form['#id'] .= '-block';
-      $form['s']['#attributes']['placeholder'] = 'Search';
-      $form['s']['#required'] = TRUE;
+      if ($view) {
+        $view->setDisplay($this->displayId);
+        $view->initHandlers();
+        $form_state = (new FormState())->setStorage([
+          'view' => $view,
+          'display' => &$view->display_handler->display,
+          'rerender' => TRUE,
+        ])
+          ->setMethod('get')
+          ->setAlwaysProcess()
+          ->disableRedirect();
+        $form_state->set('rerender', NULL);
+        $form = $this->formBuilder->buildForm(ViewsExposedForm::class, $form_state);
+        $form['#id'] .= '-block';
+        $form['s']['#attributes']['placeholder'] = 'Search';
+        $form['s']['#required'] = TRUE;
+      }
     }
 
     return $form;

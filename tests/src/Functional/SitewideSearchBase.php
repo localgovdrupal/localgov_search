@@ -11,11 +11,11 @@ use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
- * Test sitewide search.
+ * Base test for server modules to check sitewide search integration.
  *
  * @group localgov_search
  */
-class SitewideSearchTest extends BrowserTestBase {
+class SitewideSearchBase extends BrowserTestBase {
 
   use ContentTypeCreationTrait;
   use NodeCreationTrait;
@@ -122,6 +122,10 @@ class SitewideSearchTest extends BrowserTestBase {
     // Index content.
     $index = Index::load('localgov_sitewide_search');
     $index->indexItems();
+
+    // Which cache is this that needs clearing. DB test doesn't need it, solr
+    // does.
+    drupal_flush_all_caches();
 
     // Check search form.
     $url = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page');

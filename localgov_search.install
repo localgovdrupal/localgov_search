@@ -16,3 +16,16 @@ function localgov_search_install() {
     localgov_search_entity_bundle_create('node', $bundle);
   }
 }
+
+/**
+ * Sitewide search database configuration moved to a new module, enable it.
+ */
+function localgov_search_update_8001() {
+  // Prevent clash as config already installed.
+  // So it's enabled, but don't run install.
+  $config = Drupal::configFactory()->getEditable('core.extension');
+  $modules = $config->get('module');
+  $modules['localgov_search_db'] = 0;
+  $config->set('module', $modules);
+  $config->save();
+}

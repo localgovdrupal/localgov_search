@@ -18,7 +18,7 @@ function localgov_search_install() {
 }
 
 /**
- * Sitewide Search Search API database becomes its own module.
+ * Sitewide search database configuration moved to a new module, enable it.
  */
 function localgov_search_update_8001() {
   // Prevent clash as config already installed.

@@ -29,3 +29,14 @@ function localgov_search_update_8001() {
   $config->set('module', $modules);
   $config->save();
 }
+
+/**
+ * Add schema version for Sitewide Search API DB module.
+ */
+function localgov_search_update_8002() {
+  if (\Drupal::moduleHandler()->moduleExists('localgov_search_db') &&
+    !\Drupal::keyValue('system.schema')->has('localgov_search_db')
+  ) {
+    \Drupal::keyValue('system.schema')->set('localgov_search_db', 8000);
+  }
+}

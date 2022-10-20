@@ -42,6 +42,7 @@ class SitewideSearchBase extends BrowserTestBase {
    */
   protected static $modules = [
     'localgov_search',
+    'big_pipe',
   ];
 
   /**
@@ -151,6 +152,13 @@ class SitewideSearchBase extends BrowserTestBase {
     $this->submitForm(['s' => $body2], 'Apply');
     $this->assertSession()->pageTextContains($title2);
     $this->assertSession()->pageTextContains($summary2);
+
+    // Check caching of block.
+    $this->drupalGet("/search", ['query' => ['s' => $title1]]);
+    $this->assertSession()->pageTextContains($title1);
+    $this->drupalGet("/search", ['query' => ['s' => $title1]]);
+    $this->drupalGet("/search");
+    $this->assertSession()->pageTextNotContains($title1);
   }
 
   /**

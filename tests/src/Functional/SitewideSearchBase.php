@@ -42,6 +42,7 @@ class SitewideSearchBase extends BrowserTestBase {
    */
   protected static $modules = [
     'localgov_search',
+    'block',
     'big_pipe',
   ];
 
@@ -153,12 +154,22 @@ class SitewideSearchBase extends BrowserTestBase {
     $this->assertSession()->pageTextContains($title2);
     $this->assertSession()->pageTextContains($summary2);
 
-    // Check caching of block.
-    $this->drupalGet("/search", ['query' => ['s' => $title1]]);
+    // Check caching of search field.
+    $url_front = Url::fromRoute('<front>');
+    $url_search = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page');
+    $url_search_title = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page', [], ['query' => ['s' => $title1]]);
+    $url_search_canary = Url::fromRoute('view.localgov_sitewide_search.sitewide_search_page', [], ['query' => ['s' => 'canary']]);
+    // Search page.
+    $this->drupalGet($url_search_title);
     $this->assertSession()->pageTextContains($title1);
-    $this->drupalGet("/search", ['query' => ['s' => $title1]]);
-    $this->drupalGet("/search");
+    $this->drupalGet($url_search_title);
+    $this->drupalGet($url_search);
     $this->assertSession()->pageTextNotContains($title1);
+    // Block.
+    $this->drupalPlaceBlock('localgov_sitewide_search_block', ['region' => 'header']);
+    $this->drupalGet($url_search_canary);
+    $this->drupalGet($url_front);
+    $this->assertSession()->responseNotContains('canary');
   }
 
   /**

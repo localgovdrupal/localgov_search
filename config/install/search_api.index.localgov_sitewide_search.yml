@@ -6,6 +6,9 @@ dependencies:
   module:
     - search_api
     - node
+  enforced:
+    module:
+      - localgov_search
 id: localgov_sitewide_search
 name: 'Sitewide search'
 description: ''

@@ -6,6 +6,9 @@ dependencies:
   module:
     - search_api
     - user
+  enforced:
+    module:
+      - localgov_search
 id: localgov_sitewide_search
 label: 'Sitewide search'
 module: views

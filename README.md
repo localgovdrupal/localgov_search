@@ -17,3 +17,11 @@ Content is indexed using the 'Search index' display mode and displayed using the
 'Search result highlighting input' display mode. To change what is indexed and how
 the results are displayed can be done by adjusting these display modes on the
 desired content type.
+
+## Maintainers
+
+This project is currently maintained by: 
+
+ - Finn Lewis: https://www.drupal.org/u/finn-lewis
+ - Ekes: https://www.drupal.org/u/ekes
+ - Stephen Cox: https://www.drupal.org/u/stephen-cox 

@@ -80,7 +80,7 @@ function localgov_search_views_pre_render(ViewExecutable $view) {
     // Add search term to page title.
     // This currently only sets the title in the header, not the page title,
     // see: https://github.com/localgovdrupal/localgov_core/issues/93
-    elseif (isset($view->exposed_data['s']) and (int) $view->total_rows > 0) {
+    elseif (isset($view->exposed_data['s']) && (int) $view->total_rows > 0) {
       $title = $view->exposed_data['s'] . ' - ' . $view->getTitle();
       $view->setTitle($title);
     }

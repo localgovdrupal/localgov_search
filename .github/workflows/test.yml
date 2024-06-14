@@ -3,10 +3,10 @@ name: Test localgovdrupal/localgov_search drupal-module
 on:
   push:
     branches:
-      - '2.x'
+      - '1.x'
   pull_request:
     branches:
-      - '2.x'
+      - '1.x'
   workflow_dispatch:
 
 jobs:

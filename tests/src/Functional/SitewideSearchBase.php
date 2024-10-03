@@ -4,12 +4,12 @@ namespace Drupal\Tests\localgov_search\Functional;
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
 use Drupal\Core\Url;
-use Drupal\node\NodeInterface;
-use Drupal\search_api\Entity\Index;
-use Drupal\search_api\Utility\Utility;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\node\NodeInterface;
+use Drupal\search_api\Entity\Index;
+use Drupal\search_api\Utility\Utility;
 
 /**
  * Base test for server modules to check sitewide search integration.

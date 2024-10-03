@@ -3,8 +3,8 @@
 namespace Drupal\Tests\localgov_search\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\search_api\Entity\Index;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
+use Drupal\search_api\Entity\Index;
 use Drupal\views\Entity\View;
 
 /**
@@ -36,7 +36,7 @@ class ContentTypesAddedToSearchTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public function setUp(): void {
-    parent::setup();
+    parent::setUp();
 
     $this->installEntitySchema('node');
     $this->installEntitySchema('search_api_task');
